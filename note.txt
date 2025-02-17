@@ -1,0 +1,9 @@
+modules: 
+ - echo (go get github.com/labstack/echo/v4) -> http server
+ - gorm (go get -u gorm.io/gorm) -> database connection & orm
+ - gorm mysql driver (go get -u gorm.io/driver/mysql) -> mysql driver
+ - viper (go get github.com/spf13/viper) -> configuration env
+ - bluemonday (go get github.com/microcosm-cc/bluemonday) -> sanitize input html
+
+
+ 
