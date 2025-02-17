@@ -19,7 +19,6 @@ func main() {
 	server.POST("/users", controllers.Create)
 	server.GET("/users/:id", controllers.Read)
 	server.PUT("/users/:id", controllers.Update)
-	server.DELETE("/users/:id", controllers.Delete)
 
 	server.Start(":1323")
 }
