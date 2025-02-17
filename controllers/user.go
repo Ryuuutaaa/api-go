@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"demo/config"
 	"demo/models"
 	"net/http"
 	"strconv"
@@ -110,33 +109,3 @@ func Update(c echo.Context) error {
 	})
 }
 
-func Delete(c echo.Context) error {
-	ctx := c.Request().Context()
-
-	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]any{
-			"message": "Bad Request",
-		})
-	}
-
-	// Check if the user exists
-	var user models.User
-	if err := config.Connection.WithContext(ctx).First(&user, id).Error; err != nil {
-		return c.JSON(http.StatusNotFound, map[string]any{
-			"message": "User not found",
-		})
-	}
-
-	// Delete the user
-	if err := models.Delete(ctx, uint(id)); err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]any{
-			"message": "Internal Server Error",
-			"error":   err.Error(),
-		})
-	}
-
-	return c.JSON(http.StatusOK, map[string]any{
-		"message": "Success",
-	})
-}

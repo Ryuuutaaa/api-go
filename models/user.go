@@ -37,7 +37,3 @@ func Update(ctx context.Context, id uint, data User) (User, error) {
 	}
 	return user, nil
 }
-
-func Delete(ctx context.Context, id uint) error {
-	return config.Connection.WithContext(ctx).Where("id = ?", id).Delete(&User{}).Error
-}
