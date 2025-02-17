@@ -120,9 +120,7 @@ func Delete(c echo.Context) error {
 		})
 	}
 
-	data := models.User{}
-
-	if err := models.Delete(ctx, uint(id), data); err != nil {
+	if err := models.Delete(ctx, uint(id)); err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]any{
 			"message": "Internal Server Error",
 			"error":   err.Error(),
@@ -132,5 +130,4 @@ func Delete(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]any{
 		"message": "Success",
 	})
-
 }
