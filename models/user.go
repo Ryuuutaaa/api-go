@@ -3,6 +3,7 @@ package models
 import (
 	"context"
 	"demo/config"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -10,8 +11,11 @@ import (
 type User struct {
 	gorm.Model
 
-	Name  string
-	Email string
+	Name      string
+	Email     string
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
 func Create(ctx context.Context, data User) error {
