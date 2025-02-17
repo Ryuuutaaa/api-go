@@ -26,6 +26,12 @@ func Read(ctx context.Context, id uint) (User, error) {
 	return user, nil
 }
 
-func Update() {}
+func Update(ctx context.Context, id uint, data User) (User, error) {
+	var user User
+	if err := config.Connection.WithContext(ctx).Where("id = ?", id).Updates(&data).First(&user).Error; err != nil {
+		return User{}, err
+	}
+	return user, nil
+}
 
 func Delete() {}
