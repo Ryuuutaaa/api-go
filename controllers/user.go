@@ -108,3 +108,29 @@ func Update(c echo.Context) error {
 		"data":    user,
 	})
 }
+
+func Delete(c echo.Context) error {
+	ctx := c.Request().Context()
+
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]any{
+			"message": "Bad Request",
+		})
+	}
+
+	data := models.User{}
+
+	if err := models.Delete(ctx, uint(id), data); err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]any{
+			"message": "Internal Server Error",
+			"error":   err.Error(),
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]any{
+		"message": "Success",
+	})
+
+}
