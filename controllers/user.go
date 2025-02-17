@@ -72,7 +72,6 @@ func Update(c echo.Context) error {
 	ctx := c.Request().Context()
 
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
-
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]any{
 			"message": "Bad Request",
@@ -109,4 +108,3 @@ func Update(c echo.Context) error {
 		"data":    user,
 	})
 }
-		
