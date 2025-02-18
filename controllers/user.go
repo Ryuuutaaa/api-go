@@ -45,10 +45,28 @@ func Create(c echo.Context) error {
 	})
 }
 
+func ReadAll(c echo.Context) error {
+	ctx := c.Request().Context()
+
+	users, err := models.ReadAll(ctx)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]any{
+			"message": "Internal Server Error",
+			"error":   err.Error(),
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]any{
+		"message": "Success",
+		"data":    users,
+	})
+}
+
 func Read(c echo.Context) error {
 	ctx := c.Request().Context()
 
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]any{
 			"message": "Bad Request",
@@ -73,6 +91,7 @@ func Update(c echo.Context) error {
 	ctx := c.Request().Context()
 
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]any{
 			"message": "Bad Request",

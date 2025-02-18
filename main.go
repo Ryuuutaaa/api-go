@@ -16,7 +16,8 @@ func main() {
 
 	server := echo.New()
 
-	server.POST("/users", controllers.Create)
+	server.GET("/users", controllers.ReadAll)
+	server.POST("/users/create", controllers.Create)
 	server.GET("/users/:id", controllers.Read)
 	server.PUT("/users/:id", controllers.Update)
 	server.DELETE("/users/:id", controllers.Delete)

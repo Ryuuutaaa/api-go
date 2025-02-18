@@ -30,6 +30,14 @@ func Read(ctx context.Context, id uint) (User, error) {
 	return user, nil
 }
 
+func ReadAll(ctx context.Context) ([]User, error) {
+	var users []User
+	if err := config.Connection.WithContext(ctx).Find(&users).Error; err != nil {
+		return nil, err
+	}
+	return users, nil
+}
+
 func Update(ctx context.Context, id uint, data User) (User, error) {
 	var user User
 	if err := config.Connection.WithContext(ctx).Where("id = ?", id).Updates(&data).First(&user).Error; err != nil {
