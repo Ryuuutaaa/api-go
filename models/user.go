@@ -37,3 +37,18 @@ func Update(ctx context.Context, id uint, data User) (User, error) {
 	}
 	return user, nil
 }
+
+func Delete(ctx context.Context, id string) error {
+	result := config.Connection.WithContext(ctx).
+		Delete(&User{}, id)
+
+	if result.Error != nil {
+		return result.Error
+	}
+
+	if result.RowsAffected == 0 {
+		return gorm.ErrRecordNotFound
+	}
+
+	return nil
+}

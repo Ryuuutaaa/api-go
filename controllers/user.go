@@ -7,6 +7,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/microcosm-cc/bluemonday"
+	"gorm.io/gorm"
 )
 
 func Create(c echo.Context) error {
@@ -109,3 +110,30 @@ func Update(c echo.Context) error {
 	})
 }
 
+func Delete(c echo.Context) error {
+	ctx := c.Request().Context()
+	id := c.Param("id")
+
+	if id == "" {
+		return c.JSON(http.StatusBadRequest, map[string]any{
+			"message": "ID is required",
+		})
+	}
+
+	if err := models.Delete(ctx, id); err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return c.JSON(http.StatusNotFound, map[string]any{
+				"message": "User not found",
+				"id":      id,
+			})
+		}
+		return c.JSON(http.StatusInternalServerError, map[string]any{
+			"message": "Internal Server Error",
+			"error":   err.Error(),
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]any{
+		"message": "User deleted successfully",
+	})
+}
